@@ -52,17 +52,19 @@ taxon_lookup_csv <- read_csv(file.path(rawprep_prefix, "globalprep/fis/v2018/out
 
 
 ## NP
-np_harvest_tonnes_csv <- read_csv(file.path(rawkey_prefix, "global2017/gapfilling/layers/np_harvest_tonnes.csv"))%>%
+np_harvest_tonnes_csv <- read_csv(file.path(rawkey_prefix, "globalprep/np/v2018/output/np_harvest_tonnes.csv"))%>%
   left_join(rgn_global)
+https://github.com/OHI-Science/ohiprep_v2018/blob/gh-pages/globalprep/np/v2018/output/np_harvest_tonnes.csv
+rawprep_prefix <- "https://raw.githubusercontent.com/OHI-Science/ohiprep_v2018//gh-pages"
 
 ## Species goals
-ico_spp_cat_csv <- read_csv(file.path(rawprep_prefix, "globalprep/spp_ico/v2017/int/ico_spp_cat.csv")) ## maybe don't need
-ico_spp_rgn_prepped_csv <- read_csv(file.path(rawprep_prefix, "globalprep/spp_ico/v2017/int/ico_spp_rgn_prepped.csv")) ## maybe don't need
-risk_code_lookup <- read_csv(file.path(rawprep_prefix, "globalprep/spp_ico/v2017/raw/risk_code_lookup.csv"))
-rgn_spp_gl_csv <- read_csv("data/rgn_spp_gl.csv")
-ico_spp_iucn_status_csv <- read_csv(file.path(rawprep_prefix, "globalprep/spp_ico/v2017/output/ico_spp_iucn_status.csv"))
+ico_spp_cat_csv <- read_csv(file.path(rawprep_prefix, "globalprep/ico/v2018/int/ico_spp_cat.csv")) ## maybe don't need
+ico_spp_rgn_prepped_csv <- read_csv(file.path(rawprep_prefix, "globalprep/ico/v2018/int/ico_spp_rgn_prepped.csv")) ## maybe don't need
+risk_code_lookup <- read_csv(file.path(rawprep_prefix, "globalprep/ico/v2018/raw/risk_code_lookup.csv"))
+rgn_spp_gl_csv <- read_csv("data/rgn_spp_gl.csv") #data from local connection - need file or link
+ico_spp_iucn_status_csv <- read_csv(file.path(rawprep_prefix, "globalprep/ico/v2018/output/ico_spp_iucn_status.csv"))
 
-ico_global_list <- read_csv(file.path(rawprep_prefix, "globalprep/spp_ico/v2017/int/ico_global_list.csv"))
+ico_global_list <- read_csv(file.path(rawprep_prefix, "globalprep/ico/v2017/int/ico_global_list.csv"))
 
 
 ## Habitat goals extent
@@ -582,7 +584,7 @@ rgn_spp_gl_distinct <- rgn_spp_gl %>%
 ```{r ico count, echo=FALSE}
 ## filter and join species name
 ico_spp_iucn_status <- ico_spp_iucn_status_csv %>%
-  filter(rgn_id == rgn_global$rgn_id) %>%
+  #filter(rgn_id == rgn_global$rgn_id) %>%
   left_join(ico_global_list %>%
               select(sciname, comname), 
             by = "sciname") %>%
@@ -630,5 +632,5 @@ ico_spp_code %>%
   DT::datatable()
 
 #save csv
-ico_spp_code %>% write_csv("data/ico_spp_code.csv")
+ico_spp_code %>% write_csv("global_data/ico_spp_code.csv")
 ```
